@@ -69,6 +69,8 @@ module.exports = {
                                                                 // Mark donation as used
                                                                 query(`UPDATE nespresso_donations SET donation_used = true WHERE donation_id = ${donation.donation_id}`);
 
+                                                                // TODO: Add a statistic
+
                                                                 resData.authorized = true;
                                                                 resData.message.title = `SPENDE vom ${donation.donation_create_date.toLocaleDateString("de-DE")} um ${donation.donation_create_date.toLocaleTimeString("de-DE")} von ${donation.donation_from_user} erhalten.`;
                                                                 resData.message.body = donation.donation_message;
@@ -88,7 +90,7 @@ module.exports = {
                                                                             if (credits > 0) {
                                                                                 // User still has credits
 
-                                                                                // Add a statistic
+                                                                                // TODO: Add a statistic
 
 
 
