@@ -1,6 +1,8 @@
 const { sanitize } = require("../utils/functions.js");
 const { query } = require("../utils/db.js");
 
+// TODO: Potentially rebuild using an express router
+
 module.exports = {
     tagdetected(req, res) {
         let responded = false;
@@ -91,7 +93,6 @@ module.exports = {
                                                                                 // User still has credits
 
                                                                                 // TODO: Add a statistic
-
 
 
                                                                                 query(`INSERT INTO nespresso_transactions (transaction_user_id, transaction_amount) VALUES (${user.user_id}, -1)`);
