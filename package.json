@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --port 80",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "publish": "git add . && git commit -m && git push"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.6.5",
