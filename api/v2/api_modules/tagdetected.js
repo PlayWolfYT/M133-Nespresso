@@ -47,6 +47,8 @@ module.exports = {
                                 resData.message.body = "Ihre Tasse ist noch nicht eingerichtet. \nBitte gehen Sie auf die Webseite um die Tasse zu konfigurieren.";
                                 respond();
                             } else {
+                                resData.coffeeType = cup.cup_cup_size_id;
+
                                 query(`SELECT * FROM nespresso_users LEFT JOIN nespresso_user_roles ON nespresso_users.user_role_id = nespresso_user_roles.role_id WHERE user_id = ${cup.cup_user_id}`,
                                     (err, rows) => {
                                         if (!err) {
@@ -71,13 +73,26 @@ module.exports = {
                                                                 // Mark donation as used
                                                                 query(`UPDATE nespresso_donations SET donation_used = true WHERE donation_id = ${donation.donation_id}`);
 
-                                                                // TODO: Add a statistic
+                                                                // Read credits
+                                                                query(`SELECT SUM(transaction_amount) as 'credits' FROM nespresso_transactions WHERE transaction_user_id = ${user.user_id} GROUP BY transaction_user_id`,
+                                                                    (err, rows) => {
+                                                                        if (!err) {
 
-                                                                resData.authorized = true;
-                                                                resData.message.title = `SPENDE vom ${donation.donation_create_date.toLocaleDateString("de-DE")} um ${donation.donation_create_date.toLocaleTimeString("de-DE")} von ${donation.donation_from_user} erhalten.`;
-                                                                resData.message.body = donation.donation_message;
-                                                                resData.message.author = donation.donation_from_user;
-                                                                respond();
+                                                                            resData.credits = rows[0]?.credits ?? 0;
+
+
+
+                                                                            // TODO: Add a statistic
+
+                                                                            resData.authorized = true;
+                                                                            resData.message.title = `SPENDE vom ${donation.donation_create_date.toLocaleDateString("de-DE")} um ${donation.donation_create_date.toLocaleTimeString("de-DE")} von ${donation.donation_from_user} erhalten.`;
+                                                                            resData.message.body = donation.donation_message;
+                                                                            resData.message.author = donation.donation_from_user;
+                                                                            respond();
+
+                                                                        }
+                                                                    });
+
 
                                                             } else {
                                                                 // We dont have a donation, check for transactions / credit count

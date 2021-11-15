@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS
         `user_id` INT NOT NULL AUTO_INCREMENT, 
         `user_name` VARCHAR(32) NOT NULL, 
         `user_role_id` INT NOT NULL, 
-        `user_password_hash` VARCHAR(255), 
+        `user_password_hash` VARCHAR(255),
         `user_create_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
         `user_modify_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     PRIMARY KEY (`user_id`), 
