@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS
         `user_name` VARCHAR(32) NOT NULL, 
         `user_role_id` INT NOT NULL, 
         `user_password_hash` VARCHAR(255),
+        `user_public_profile` BOOLEAN DEFAULT false,
         `user_create_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
         `user_modify_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     PRIMARY KEY (`user_id`), 
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS
         `cup_create_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
         `cup_modify_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     FOREIGN KEY (`cup_cup_size_id`) REFERENCES `nespresso_cup_sizes`(`cup_size_id`), 
+    FOREIGN KEY (`cup_user_id`) REFERENCES `nespresso_users`(`user_id`),
     PRIMARY KEY (`cup_id`) 
 );
 

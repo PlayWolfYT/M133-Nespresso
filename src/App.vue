@@ -1,10 +1,8 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div>
+    <Header />
+    <router-view></router-view>
+    <Footer />
   </div>
 </template>
 
@@ -30,3 +28,13 @@
   color: #42b983;
 }
 </style>
+
+<script>
+import Header from "@/components/Header.vue";
+export default {
+  name: "App",
+  components: {
+    Header,
+  },
+};
+</script>
