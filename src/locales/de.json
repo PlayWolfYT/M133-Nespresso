@@ -1,3 +1,31 @@
 {
-  "message": "hello i18n !!"
+  "footer": {
+    "author": "Entwickelt von Ruben Martins",
+    "copyright": "&copy; 2021 durch Ruben Martins"
+  },
+  "home": {
+    "subtitle": {
+      "donate": "spende einen Kaffee",
+      "login": "Melde dich an",
+      "text": "{login} oder {donate}"
+    },
+    "title": "Willkommen beim Nespresso Web-UI"
+  },
+  "language": {
+    "english": "Englisch",
+    "german": "Deutsch"
+  },
+  "login": {
+    "form": {
+      "back": "Zurück",
+      "password": "Passwort",
+      "submit": "Einloggen",
+      "username": "Benutzername"
+    },
+    "title": "ANMELDEN"
+  },
+  "nav": {
+    "donate": "Kaffee spenden",
+    "stats": "Statistiken ansehen"
+  }
 }

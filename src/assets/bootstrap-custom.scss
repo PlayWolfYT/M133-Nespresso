@@ -1,0 +1,13 @@
+// Import the functions
+@import "~bootstrap/scss/functions";
+
+// Import the default bootstrap variables
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+/****************  CUSTOM OVERRIDE VARIABLES  ****************/
+$body-bg: $gray-800;
+$body-color: $gray-400;
+
+// Import the rest of bootstrap
+@import "~bootstrap/scss/bootstrap.scss";

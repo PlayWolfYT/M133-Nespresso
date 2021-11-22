@@ -1,0 +1,31 @@
+{
+  "footer": {
+    "author": "Made by Ruben Martins",
+    "copyright": "&copy; by Ruben Martins"
+  },
+  "home": {
+    "subtitle": {
+      "donate": "donate a coffee",
+      "login": "Log in",
+      "text": "{login} or {donate}"
+    },
+    "title": "Welcome to the Nespresso Web UI"
+  },
+  "language": {
+    "english": "English",
+    "german": "German"
+  },
+  "login": {
+    "form": {
+      "back": "Back",
+      "password": "Password",
+      "submit": "Login",
+      "username": "Username"
+    },
+    "title": "LOGIN"
+  },
+  "nav": {
+    "donate": "Donate a coffee",
+    "stats": "Look at statistics"
+  }
+}

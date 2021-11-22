@@ -1,7 +1,15 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-sticky-top navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Nespresso</router-link>
+      <router-link class="navbar-brand" :to="{ name: 'Home' }">
+        <img
+          src="@/assets/images/logo.jpg"
+          alt="Logo"
+          height="30px"
+          width="30px"
+        />
+        Nespresso
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -14,53 +22,56 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link to="/" v-slot="{ href, navigate, isActive }">
-              <a
-                :href="href"
-                @click="navigate"
-                class="nav-link"
-                :class="{ active: isActive }"
-                >Home</a
+        <div class="w-100 row">
+          <ul class="navbar-nav col-11 justify-content-center px-0">
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'Donate' }"
+                v-slot="{ href, navigate, isExactActive }"
+                custom
               >
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/A" v-slot="{ href, navigate, isActive }">
-              <a
-                :href="href"
-                @click="navigate"
-                class="nav-link"
-                :class="{ active: isActive }"
-                >Test</a
+                <a
+                  :href="href"
+                  @click="navigate"
+                  class="nav-link"
+                  :class="{ active: isExactActive }"
+                  >{{ $t("nav.donate") }}</a
+                >
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'Stats' }"
+                v-slot="{ href, navigate, isActive }"
+                custom
               >
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+                <a
+                  :href="href"
+                  @click="navigate"
+                  class="nav-link"
+                  :class="{ active: isActive }"
+                >
+                  {{ $t("nav.stats") }}
+                </a>
+              </router-link>
+            </li>
+          </ul>
+          <ul class="navbar-nav col-1 justify-content-end px-0">
+            <!-- Language Selection -->
+            <li
+              class="nav-item d-flex ms-2"
+              v-for="language in languages"
+              :key="language.code"
+              @click="changeLocale(language.code)"
             >
-              Dropdown link
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        </ul>
+              <flag
+                class="align-middle btn"
+                :iso="language.flag"
+                :title="$t(language.translationKey)"
+              ></flag>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>
@@ -71,5 +82,19 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      languages: [
+        { code: "de", flag: "ch", translationKey: "language.german" },
+        { code: "en", flag: "gb", translationKey: "language.english" },
+      ],
+    };
+  },
+  methods: {
+    changeLocale(locale) {
+      this.$i18n.locale = locale;
+      localStorage.setItem("locale", locale);
+    },
+  },
 };
 </script>
