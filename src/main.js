@@ -4,6 +4,8 @@ import router from "./router";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import i18n from "./i18n";
 import FlagIcon from "vue-flag-icon";
+import VueSweetalert2 from "vue-sweetalert2";
+import axios from "axios";
 
 Vue.config.productionTip = false;
 
@@ -52,8 +54,43 @@ Vue.use(IconsPlugin);
 // Flag Icons
 Vue.use(FlagIcon);
 
-new Vue({
+// SweetAlert2
+import "sweetalert2/dist/sweetalert2.min.css";
+import "@sweetalert2/theme-wordpress-admin/wordpress-admin.min.css";
+Vue.use(VueSweetalert2);
+
+// Authentication mixin
+//Vue.use(AuthMixin);
+
+router.vm = vm;
+
+let setupError = false;
+
+axios
+  .get("/nespresso/api/v2/setup")
+  .then((res) => {
+    if (res.data.error) {
+      setupError = true;
+      alert("API-Communication failed. Please try again later.");
+      return;
+    } else {
+      if (res.data.setup) {
+        // Send user to setup page.
+        router.push({ name: "Setup" });
+      }
+    }
+  })
+  .catch(() => {
+    setupError = true;
+    alert("API-Communication failed. Please try again later.");
+    return;
+  });
+
+const vm = new Vue({
   router,
   i18n,
-  render: (h) => h(App),
+  render: (h) => {
+    if (!setupError) return h(App);
+    else return undefined;
+  },
 }).$mount("#app");

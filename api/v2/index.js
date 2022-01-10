@@ -5,8 +5,10 @@ require("dotenv").config();
 
 const { setupDatabase } = require("./utils/db.js");
 const { tagdetected } = require("./api_modules/tagdetected.js");
+const { setupModule } = require('./api_modules/setupModule.js');
 const { userModule } = require("./api_modules/userModule.js");
 const { authModule } = require("./api_modules/authModule.js");
+const { paypalModule } = require("./api_modules/paypalModule.js");
 const { validateJWT, renewJWT } = require("./utils/functions.js");
 
 /***********    DATABASE SETUP    ************/
@@ -31,8 +33,10 @@ const api = express.Router();
 
 /***********    API PATHS    ************/
 app.use(APP_ROOT, api);
+app.use(APP_ROOT, setupModule);
 app.use(APP_ROOT, userModule);
 app.use(APP_ROOT, authModule);
+app.use(APP_ROOT, paypalModule);
 
 api.get("/tagdetected/:tag/", (req, res) => tagdetected(req, res));
 

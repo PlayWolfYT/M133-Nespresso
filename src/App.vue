@@ -50,12 +50,18 @@
   padding-top: 3.6rem; /* Size of header */
   min-height: 94.2vh; /* Size of actual page content (fill screen minus header and footer) */
 }
+
+/* SWEETALERT OVERRIDES */
+.swal2-backdrop-show.swal2-center {
+  background: rgb(0 0 0 / 50%) !important;
+}
 </style>
 
 <script>
 import $ from "jquery";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+
 export default {
   name: "App",
   components: {

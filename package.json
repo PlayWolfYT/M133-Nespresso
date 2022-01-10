@@ -9,6 +9,8 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@sweetalert2/theme-dark": "^5.0.8",
+    "@sweetalert2/theme-wordpress-admin": "^5.0.8",
     "@vue/cli": "^4.5.15",
     "animate.css": "^4.1.1",
     "axios": "^0.24.0",
@@ -25,7 +27,8 @@
     "vue-axios": "^3.4.0",
     "vue-flag-icon": "^1.0.6",
     "vue-i18n": "^8.26.7",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vue-sweetalert2": "^5.0.2"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.1.0",

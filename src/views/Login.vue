@@ -97,7 +97,8 @@ export default {
           const token = res.data.token;
 
           localStorage.setItem("auth", token);
-          this.$router.push(this.$route.query.redirect || "/");
+          this.$parent.$children[0].$forceUpdate(); /* Update header component */
+          this.$router.push(this.$route.query.redirect || "/", () => {});
         })
         .catch((err) => {
           const res = err.response;

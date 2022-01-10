@@ -1,13 +1,33 @@
 {
+  "donate": {
+    "continue": "Write Message",
+    "input-placeholder": "Type a name...",
+    "input-text": "Please choose a member to donate to...",
+    "message": {
+      "message": "Your message...",
+      "user": "Selected User"
+    },
+    "no_users_available": "No Users Available",
+    "popup": {
+      "confirmation": {
+        "body": "Your donation to \"{name}\" was successfully sent. It may take a few minutes for them to retreive it.",
+        "title": "Donation was successfully sent"
+      }
+    },
+    "search": "Search...",
+    "title": "Donate a coffee",
+    "username": "Username"
+  },
   "footer": {
     "author": "Made by Ruben Martins",
     "copyright": "&copy; by Ruben Martins"
   },
   "home": {
     "subtitle": {
-      "donate": "donate a coffee",
+      "donate": "Donate a coffee",
+      "guest": "{login} or {donate}",
       "login": "Log in",
-      "text": "{login} or {donate}"
+      "text": "{donate}"
     },
     "title": "Welcome to the Nespresso Web UI"
   },
@@ -26,6 +46,20 @@
   },
   "nav": {
     "donate": "Donate a coffee",
+    "login": "Login",
+    "logout": "Log out",
     "stats": "Look at statistics"
+  },
+  "setup": {
+    "popup": {
+      "error": {
+        "body": "Error: {error}",
+        "title": "Failed to setup."
+      },
+      "success": {
+        "body": "Success",
+        "title": "The website was successfully set up. Please log to the created user. "
+      }
+    }
   }
 }

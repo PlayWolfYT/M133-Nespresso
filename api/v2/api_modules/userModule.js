@@ -1,14 +1,11 @@
 /**************  IMPORTS  **************/
 const { query } = require("../utils/db.js");
+// TODO: Implement methods that need authenticatedRequest.
+//const { authenticateRequest } = require("./authModule.js");
 const bcrypt = require("bcrypt");
 const userModule = require("express").Router();
 
 /**************  FUNCTIONALITY  **************/
-
-userModule.get("/user/test", (req, res) => {
-  res.json(bcrypt.hashSync("1234", 8));
-});
-
 userModule.get("/user/:user_id", (req, res) => {
   // If we actually get a user id
   if (Number.isInteger(req.params.user_id)) {
@@ -75,6 +72,22 @@ userModule.put("/user/register", (req, res) => {
       fields: ["username"],
     });
   }
+});
+
+userModule.get("/users/donatable", (req, res) => {
+  query(
+    "SELECT * FROM nespresso_users WHERE user_public_profile = true ORDER BY user_name ASC",
+    (err, rows) => {
+      if (!err) {
+        for (let i = 0; i < rows.length; i++) {
+          delete rows[i].user_password_hash;
+        }
+        res.json(rows);
+      } else {
+        res.status(500).json({ error: "Could not fetch donatable users" });
+      }
+    }
+  );
 });
 
 /**************  MODULE EXPORTS  **************/

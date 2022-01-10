@@ -1,13 +1,33 @@
 {
+  "donate": {
+    "continue": "Nachricht verfassen",
+    "input-placeholder": "Schreiben sie einen Namen...",
+    "input-text": "Bitte wählen Sie jemanden aus...",
+    "message": {
+      "message": "Ihre Nachricht...",
+      "user": "Ausgewählter Benutzer"
+    },
+    "no_users_available": "Keine Benutzer Verfügbar",
+    "popup": {
+      "confirmation": {
+        "body": "Ihre Spende an \"{name}\" wurde gesendet. Es kann ein paar Minuten dauern bis die Spende eingelöst werden kann.",
+        "title": "Ihre Spende wurde gesendet"
+      }
+    },
+    "search": "Suchen...",
+    "title": "Spende einen Kaffee",
+    "username": "Benutzername"
+  },
   "footer": {
     "author": "Entwickelt von Ruben Martins",
     "copyright": "&copy; 2021 durch Ruben Martins"
   },
   "home": {
     "subtitle": {
-      "donate": "spende einen Kaffee",
+      "donate": "Spende einen Kaffee",
+      "guest": "{login} oder {donate}",
       "login": "Melde dich an",
-      "text": "{login} oder {donate}"
+      "text": "{donate}"
     },
     "title": "Willkommen beim Nespresso Web-UI"
   },
@@ -26,6 +46,20 @@
   },
   "nav": {
     "donate": "Kaffee spenden",
+    "login": "Anmelden",
+    "logout": "Ausloggen",
     "stats": "Statistiken ansehen"
+  },
+  "setup": {
+    "popup": {
+      "error": {
+        "body": "Fehler: {error}",
+        "title": "Fehler beim Setup"
+      },
+      "success": {
+        "body": "Die Webseite wurde erfolgreich eingerichtet. Bitte melden Sie sich nun an.",
+        "title": "Erfolg"
+      }
+    }
   }
 }

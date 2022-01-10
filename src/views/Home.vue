@@ -2,7 +2,10 @@
   <div>
     <div>
       <h1>{{ $t("home.title") }}</h1>
-      <i18n path="home.subtitle.text" tag="h4">
+      <i18n
+        :path="isLoggedIn() ? 'home.subtitle.text' : 'home.subtitle.guest'"
+        tag="h4"
+      >
         <template v-slot:login>
           <router-link
             :to="{ name: 'Login' }"
@@ -37,7 +40,12 @@ a {
 </style>
 
 <script>
+import { isLoggedIn } from "@/utils/Auth.js";
+
 export default {
   name: "Home",
+  methods: {
+    isLoggedIn,
+  },
 };
 </script>

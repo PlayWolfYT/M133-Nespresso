@@ -28,10 +28,12 @@ async function query(query, callback = undefined) {
         // Terminate Database connection after query
         connection.release();
 
-        // Trigger the callback (if we have one)
-        if (callback) callback(err, rows, fields);
+        let callbackResponse = undefined;
 
-        resolve(err, rows, fields);
+        // Trigger the callback (if we have one)
+        if (callback) callbackResponse = callback(err, rows, fields);
+
+        resolve(err, rows, fields, callbackResponse);
       });
     });
   });

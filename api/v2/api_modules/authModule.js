@@ -3,7 +3,7 @@ const { query } = require("../utils/db.js");
 const bcrypt = require("bcrypt");
 const authModule = require("express").Router();
 
-const { sanitize, generateJWT } = require("../utils/functions.js");
+const { sanitize, generateJWT, validateJWT } = require("../utils/functions.js");
 
 authModule.post("/login", (req, res) => {
   // LAYOUT:
@@ -49,12 +49,27 @@ authModule.post("/login", (req, res) => {
   );
 });
 
-/*const authenticateRequest = (req, res, next) => {
-  const header = req.headers.nespresso_token;
-};*/
+const authenticateRequest = async (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(403).json({ error: "No Auth Token Supplied" });
+  } else {
+    const reqToken = req.headers.authorization.split("nespresso_token ")[1];
+
+    const validatedJWT = await validateJWT(reqToken);
+
+    if (validatedJWT) {
+      res.setHeader("Authorization", validatedJWT.jwt);
+      res.locals.token = validatedJWT.jwt;
+      res.locals.user = validatedJWT.data;
+      next();
+    } else {
+      return res.status(403).json({ error: "Invalid JWT" });
+    }
+  }
+};
 
 /**************  MODULE EXPORTS  **************/
 module.exports = {
   authModule,
-  //authenticateRequest,
+  authenticateRequest,
 };

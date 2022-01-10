@@ -35,18 +35,30 @@ function generateJWT(data) {
   return JWT.sign(data, process.env.APP_SECRET, { expiresIn: exp });
 }
 
-function validateJWT(jwt) {
-  return JWT.verify(jwt, process.env.APP_SECRET);
+async function validateJWT(jwt) {
+  try {
+    const data = JWT.verify(jwt, process.env.APP_SECRET);
+    return { jwt: jwt, data: data };
+  } catch (e) {
+    if (e instanceof JWT.TokenExpiredError) {
+      const token = await renewJWT(jwt);
+      return await validateJWT(token);
+    } else {
+      return false;
+    }
+  }
 }
 
-async function renewJWT(jwt, callback) {
-  const safe_username = sanitize(
-    JWT.decode(jwt).username
-  ); /* We can grab the username from the jwt */
-  query(
-    `SELECT * FROM nespresso_users LEFT JOIN nespresso_user_roles ON role_id = user_role_id WHERE user_name = '${safe_username}' LIMIT 1`,
-    (err, rows) => {
-      if (!err) {
+function renewJWT(jwt) {
+  const safe_username = sanitize(JWT.decode(jwt).username);
+  return new Promise((resolve, reject) => {
+    query(
+      `SELECT * FROM nespresso_users LEFT JOIN nespresso_user_roles ON role_id = user_role_id WHERE user_name = '${safe_username}' LIMIT 1`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+
         const user = rows[0];
 
         const data = {
@@ -56,14 +68,63 @@ async function renewJWT(jwt, callback) {
           create_at: user.user_create_date,
           modify_at: user.user_modify_date,
         };
-
-        callback(undefined, generateJWT(data));
-      } else {
-        callback(err, undefined);
+        resolve(generateJWT(data));
       }
-    }
-  );
+    );
+  });
 }
+
+// async function validateJWT(jwt) {
+//   try {
+//     const data = JWT.verify(jwt, process.env.APP_SECRET);
+//     return {
+//       token: jwt,
+//       data: data,
+//       err: undefined,
+//     };
+//   } catch (e) {
+//     if (e instanceof JWT.TokenExpiredError) {
+//       // TODO: Fix this
+
+//       let renewRet = await renewJWT(jwt);
+
+//       console.log("RenewRet: ", renewRet);
+
+//       return renewRet;
+//     } else {
+//       return { token: undefined, data: undefined, err: e };
+//     }
+//   }
+// }
+
+// async function renewJWT(jwt, callback = undefined) {
+//   const safe_username = sanitize(
+//     JWT.decode(jwt).username
+//   ); /* We can grab the username from the jwt */
+//   return query(
+//     `SELECT * FROM nespresso_users LEFT JOIN nespresso_user_roles ON role_id = user_role_id WHERE user_name = '${safe_username}' LIMIT 1`,
+//     (err, rows) => {
+//       if (!err) {
+//         const user = rows[0];
+
+//         const data = {
+//           id: user.user_id,
+//           username: user.user_name,
+//           role: user.role_name,
+//           create_at: user.user_create_date,
+//           modify_at: user.user_modify_date,
+//         };
+
+//         if (callback) return callback(undefined, generateJWT(data));
+
+//         return generateJWT(data);
+//       } else {
+//         if (callback) return callback(err, undefined);
+//         return err;
+//       }
+//     }
+//   );
+// }
 
 module.exports = {
   sanitize,
