@@ -153,10 +153,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>-->
 
-    <div
-      class="navbar-nav col-4 justify-content-end"
-      id="navbarNavDropdown"
-    >
+    <div class="navbar-nav col-4 justify-content-end" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li v-if="isLoggedIn()" class="nav-item">
           <router-link

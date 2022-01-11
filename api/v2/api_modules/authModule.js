@@ -28,7 +28,7 @@ authModule.post("/login", (req, res) => {
             const data = {
               id: dbUser.user_id,
               username: dbUser.user_name,
-              role: dbUser.role_name,
+              role: dbUser.role_id,
               create_at: dbUser.user_create_date,
               modify_at: dbUser.user_modify_date,
             };
