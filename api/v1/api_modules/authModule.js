@@ -7,7 +7,7 @@ const { sanitize, generateJWT, validateJWT } = require("../utils/functions.js");
 
 authModule.post("/login", (req, res) => {
   // LAYOUT:
-  // api/v2/auth -> username, password
+  // api/v1/auth -> username, password
 
   const { username, password } = req.body;
 

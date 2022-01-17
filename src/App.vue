@@ -72,8 +72,8 @@ export default {
     return {
       view_transition: {
         mode: "out-in",
-        in: "animate__fadeInLeft /*animate__faster*/",
-        out: "animate__fadeOutRight /*animate__faster*/",
+        in: "animate__fadeInRight /*animate__faster*/",
+        out: "animate__fadeOutLeft /*animate__faster*/",
         fromHidden: true,
       },
     };

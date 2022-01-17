@@ -91,7 +91,7 @@ export default {
       this.errors.error_name = "";
 
       axios
-        .post("/nespresso/api/v2/login", this.user)
+        .post("/nespresso/api/v1/login", this.user)
         .then((res) => {
           // Request is okay (Status 200), we should have a token now
           const token = res.data.token;

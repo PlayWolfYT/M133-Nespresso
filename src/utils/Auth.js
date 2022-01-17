@@ -6,6 +6,10 @@ function isLoggedIn() {
   return localStorage.getItem("auth") != undefined;
 }
 
+function isAdmin() {
+  return isLoggedIn() ? getUserData().role === 1 : false;
+}
+
 function logout() {
   localStorage.removeItem("auth");
 }
@@ -71,6 +75,7 @@ const AuthMixin = {
 
 export {
   isLoggedIn,
+  isAdmin,
   logout,
   login,
   getUserToken,

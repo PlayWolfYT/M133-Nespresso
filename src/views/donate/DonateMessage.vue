@@ -29,7 +29,9 @@
         ></span>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-secondary">SUBMIT</button>
+        <button type="submit" class="btn btn-success w-100 mt-3">
+          {{ $t("donate.message.submit") }}
+        </button>
       </div>
     </form>
   </div>

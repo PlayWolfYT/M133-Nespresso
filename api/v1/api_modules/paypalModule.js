@@ -34,6 +34,15 @@ paypalModule.post("/paypal", (req, res) => {
   res.sendStatus(200);
 });
 
+paypalModule.post("/paypal/bypass", (req, res) => {
+  console.log("Bypassing paypal...");
+
+  const { selectedUser, message } = req.body;
+  console.log(selectedUser, message);
+
+  res.sendStatus(200);
+});
+
 module.exports = {
   paypalModule,
 };

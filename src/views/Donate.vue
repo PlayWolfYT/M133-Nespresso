@@ -61,7 +61,7 @@
         <b-icon icon="arrow-right-circle"></b-icon>
       </button>-->
       <button
-        class="btn btn-secondary w-100 mx-0 px-0 transition"
+        class="btn btn-dark w-100 mx-0 px-0 transition"
         :class="{ disabled: selectedUser === undefined }"
         @click="goToMessage"
       >
@@ -144,7 +144,7 @@ export default {
   },
   mounted() {
     // Load users from API
-    axios.get("/nespresso/api/v2/users/donatable").then((res) => {
+    axios.get("/nespresso/api/v1/users/donatable").then((res) => {
       this.users = res.data;
     });
   },

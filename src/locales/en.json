@@ -5,9 +5,13 @@
     "input-text": "Please choose a member to donate to...",
     "message": {
       "message": "Your message...",
+      "submit": "Continue to payment",
       "user": "Selected User"
     },
     "no_users_available": "No Users Available",
+    "payment": {
+      "title": "Finishing up..."
+    },
     "popup": {
       "confirmation": {
         "body": "Your donation to \"{name}\" was successfully sent. It may take a few minutes for them to retreive it.",
@@ -45,6 +49,7 @@
     "title": "LOGIN"
   },
   "nav": {
+    "claimtag": "Claim tag",
     "donate": "Donate a coffee",
     "login": "Login",
     "logout": "Log out",
@@ -53,13 +58,40 @@
   "setup": {
     "popup": {
       "error": {
-        "body": "Error: {error}",
+        "body": "{error}",
         "title": "Failed to setup."
       },
       "success": {
         "body": "Success",
         "title": "The website was successfully set up. Please log to the created user. "
       }
+    }
+  },
+  "tags": {
+    "claim": {
+      "claim_button": "Claim",
+      "date": "Date",
+      "no_tags": "No tags available",
+      "popup": {
+        "error": {
+          "body": "{error}",
+          "invalid_user": "Please use a valid userid",
+          "tag_already_claimed": "This tag was already claimed.",
+          "tag_not_found": "This tag does not exist.",
+          "title": "Could not claim",
+          "user_not_found": "No user with this ID was found."
+        },
+        "success": {
+          "body": "You successfully claimed the tag \"{tag}\".",
+          "title": "Tag claimed"
+        }
+      },
+      "reload_tags": "Refresh List",
+      "title": "Claim tag"
+    },
+    "overview": {
+      "no_tags": "No Tags Available",
+      "title": "Tag overview"
     }
   }
 }

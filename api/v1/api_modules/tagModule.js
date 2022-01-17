@@ -183,88 +183,159 @@ tagModule.get("/tagdetected/:tag/", (req, res) => {
   }
 });
 
-tagModule.use(authenticateRequest).get("/tag/get", (_req, res) => {
+tagModule.get("/tag/get", authenticateRequest, (req, res) => {
   // Only authenticated users can do stuff with tags
-  //if (authenticateRequest(req, res)) {
-  query(
-    `
-      SELECT 
-        c.cup_id, 
-        c.cup_create_date, 
-        c.cup_modify_date, 
-        cs.cup_size_name, 
-        cs.cup_size_value, 
-        cs.cup_size_create_date, 
-        cs.cup_size_modify_date, 
-        u.user_id, 
-        u.user_name, 
-        u.user_public_profile, 
-        u.user_create_date, 
-        u.user_modify_date, 
-        r.role_id, 
-        r.role_name, 
-        r.role_create_date 
-      FROM 
-        nespresso_cups c 
-      LEFT JOIN 
-        nespresso_cup_sizes cs 
-      ON 
-        c.cup_cup_size_id = cs.cup_size_id 
-      LEFT JOIN 
-        nespresso_users u 
-      ON 
-        c.cup_user_id = u.user_id 
-      LEFT JOIN 
-        nespresso_user_roles r 
-      ON 
-        u.user_role_id = r.role_id
-      WHERE u.user_id != 1
-      `,
-    (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.sqlMessage });
-        return;
-      }
-      res.json(rows);
+
+  // Check if we are admin or not
+  if (res.locals.user.role === 1) {
+    // Check if we supplied a userid
+    if (req.body.userid) {
+      // Respond with all tags from that user
+      query(
+        `
+          SELECT 
+            c.cup_id, 
+            UNIX_TIMESTAMP(c.cup_create_date) as 'cup_create_date', 
+            UNIX_TIMESTAMP(c.cup_modify_date) as 'cup_modify_date', 
+            cs.cup_size_name, 
+            cs.cup_size_value, 
+            UNIX_TIMESTAMP(cs.cup_size_create_date) as 'cup_size_create_date', 
+            UNIX_TIMESTAMP(cs.cup_size_modify_date) as 'cup_size_modify_date', 
+            u.user_id, 
+            u.user_name, 
+            u.user_public_profile, 
+            UNIX_TIMESTAMP(u.user_create_date) as 'user_create_date', 
+            UNIX_TIMESTAMP(u.user_modify_date) as 'user_modify_date', 
+            r.role_id, 
+            r.role_name, 
+            UNIX_TIMESTAMP(r.role_create_date) as 'role_create_date'
+          FROM 
+            nespresso_cups c 
+          LEFT JOIN 
+            nespresso_cup_sizes cs 
+          ON 
+            c.cup_cup_size_id = cs.cup_size_id 
+          LEFT JOIN 
+            nespresso_users u 
+          ON 
+            c.cup_user_id = u.user_id 
+          LEFT JOIN 
+            nespresso_user_roles r 
+          ON 
+            u.user_role_id = r.role_id
+          WHERE u.user_id != 
+          ` + (parseInt(req.body.userid) ? parseInt(req.body.userid) : -1),
+        (err, rows) => {
+          if (err) {
+            res.status(500).json({ error: err.sqlMessage });
+            return;
+          }
+          res.json(rows);
+        }
+      );
+    } else {
+      // Respond with all tags
+      query(
+        `
+          SELECT 
+            c.cup_id, 
+            UNIX_TIMESTAMP(c.cup_create_date) as 'cup_create_date', 
+            UNIX_TIMESTAMP(c.cup_modify_date) as 'cup_modify_date', 
+            cs.cup_size_name, 
+            cs.cup_size_value, 
+            UNIX_TIMESTAMP(cs.cup_size_create_date) as 'cup_size_create_date', 
+            UNIX_TIMESTAMP(cs.cup_size_modify_date) as 'cup_size_modify_date', 
+            u.user_id, 
+            u.user_name, 
+            u.user_public_profile, 
+            UNIX_TIMESTAMP(u.user_create_date) as 'user_create_date', 
+            UNIX_TIMESTAMP(u.user_modify_date) as 'user_modify_date', 
+            r.role_id, 
+            r.role_name, 
+            UNIX_TIMESTAMP(r.role_create_date) as 'role_create_date'
+          FROM 
+            nespresso_cups c 
+          LEFT JOIN 
+            nespresso_cup_sizes cs 
+          ON 
+            c.cup_cup_size_id = cs.cup_size_id 
+          LEFT JOIN 
+            nespresso_users u 
+          ON 
+            c.cup_user_id = u.user_id 
+          LEFT JOIN 
+            nespresso_user_roles r 
+          ON 
+            u.user_role_id = r.role_id
+          WHERE u.user_id != 1
+          `,
+        (err, rows) => {
+          if (err) {
+            res.status(500).json({ error: err.sqlMessage });
+            return;
+          }
+          res.json(rows);
+        }
+      );
     }
-  );
+  } else {
+    // Respond with own tags
+    query(
+      `
+        SELECT 
+          c.cup_id, 
+          UNIX_TIMESTAMP(c.cup_create_date) as 'cup_create_date', 
+          UNIX_TIMESTAMP(c.cup_modify_date) as 'cup_modify_date', 
+          cs.cup_size_name, 
+          cs.cup_size_value, 
+          UNIX_TIMESTAMP(cs.cup_size_create_date) as 'cup_size_create_date', 
+          UNIX_TIMESTAMP(cs.cup_size_modify_date) as 'cup_size_modify_date', 
+          u.user_id, 
+          u.user_name, 
+          u.user_public_profile, 
+          UNIX_TIMESTAMP(u.user_create_date) as 'user_create_date', 
+          UNIX_TIMESTAMP(u.user_modify_date) as 'user_modify_date', 
+          r.role_id, 
+          r.role_name, 
+          UNIX_TIMESTAMP(r.role_create_date) as 'role_create_date'
+        FROM 
+          nespresso_cups c 
+        LEFT JOIN 
+          nespresso_cup_sizes cs 
+        ON 
+          c.cup_cup_size_id = cs.cup_size_id 
+        LEFT JOIN 
+          nespresso_users u 
+        ON 
+          c.cup_user_id = u.user_id 
+        LEFT JOIN 
+          nespresso_user_roles r 
+        ON 
+          u.user_role_id = r.role_id
+        WHERE u.user_id != 
+        ` + res.locals.user.user_id,
+      (err, rows) => {
+        if (err) {
+          res.status(500).json({ error: err.sqlMessage });
+          return;
+        }
+        res.json(rows);
+      }
+    );
+  }
+
   //}
 });
 
-tagModule.use(authenticateRequest).get("/tag/get/unowned", (_req, res) => {
+tagModule.get("/tag/get/unowned", authenticateRequest, (_req, res) => {
   query(
     `
     SELECT 
       c.cup_id, 
-      c.cup_create_date, 
-      c.cup_modify_date, 
-      cs.cup_size_name, 
-      cs.cup_size_value, 
-      cs.cup_size_create_date, 
-      cs.cup_size_modify_date, 
-      u.user_id, 
-      u.user_name, 
-      u.user_public_profile, 
-      u.user_create_date, 
-      u.user_modify_date, 
-      r.role_id, 
-      r.role_name, 
-      r.role_create_date 
+      UNIX_TIMESTAMP(c.cup_modify_date) as 'cup_modify_date'
     FROM
       nespresso_cups c
-    LEFT JOIN
-      nespresso_cup_sizes cs
-    ON
-      c.cup_cup_size_id = cs.cup_size_id
-    LEFT JOIN
-      nespresso_users u
-    ON
-      c.cup_user_id = u.user_id
-    LEFT JOIN
-      nespresso_user_roles r
-    ON
-      u.user_role_id = r.role_id
-    WHERE u.user_id = 1
+    WHERE c.cup_user_id = 1 /* Owned by System */
   `,
     (err, rows) => {
       if (err) {
@@ -277,7 +348,7 @@ tagModule.use(authenticateRequest).get("/tag/get/unowned", (_req, res) => {
   );
 });
 
-tagModule.use(authenticateRequest).post("/tag/claim/:tag", (req, res) => {
+tagModule.post("/tag/claim/:tag", authenticateRequest, (req, res) => {
   let tag = sanitize(req.params.tag);
 
   // Validate if we have a valid tag
@@ -344,9 +415,9 @@ tagModule.use(authenticateRequest).post("/tag/claim/:tag", (req, res) => {
                     }
 
                     // Check if we found a user or not
-                    // If we have the id is already set, so we don't need to change it
+                    // If we have, the id is already set, so we don't need to change it
                     if (rows.length <= 0) {
-                      res.json({
+                      res.status(400).json({
                         error: "user_not_found",
                       });
                       userID = undefined;
@@ -355,42 +426,41 @@ tagModule.use(authenticateRequest).post("/tag/claim/:tag", (req, res) => {
                   }
                 );
               } else {
-                // User did not supply a user id. We use his own
+                // User did supply a user id, yet he is not admin. We use his own
                 userID = res.locals.user.id;
               }
-
-              // We now have the user id, claim the tag to that id
-              query(
-                `
-                UPDATE
-                  nespresso_cups c
-                SET
-                  c.cup_user_id = ${userID}
-                WHERE
-                  c.cup_id = '${tag.cup_id}'
-              `,
-                (err) => {
-                  if (err) {
-                    res.json({
-                      error: err.sqlMessage,
-                    });
-                    return;
-                  }
-
-                  res.sendStatus(200);
-                }
-              );
             } else {
-              res.json("NO");
               userID = res.locals.user.id;
             }
+
+            // We now have the user id, claim the tag to that id
+            query(
+              `
+              UPDATE
+                nespresso_cups c
+              SET
+                c.cup_user_id = ${userID}
+              WHERE
+                c.cup_id = '${tag.cup_id}'
+            `,
+              (err) => {
+                if (err) {
+                  res.status(500).json({
+                    error: err.sqlMessage,
+                  });
+                  return;
+                }
+
+                res.sendStatus(200);
+              }
+            );
           } else {
-            res.json({
+            res.status(400).json({
               error: "tag_already_claimed",
             });
           }
         } else {
-          res.json({
+          res.status(400).json({
             error: "tag_not_found",
           });
         }

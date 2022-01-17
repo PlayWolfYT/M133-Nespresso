@@ -16,11 +16,8 @@ async function query(query, callback = undefined) {
     // Open a connection to the database
     dbPool.getConnection((err, connection) => {
       if (err) {
-        console.log(
-          "FATAL ERROR: Could not open Database Connection. Error: ",
-          err
-        );
-        reject(err);
+        console.log("FATAL ERROR: Could not open Database Connection.");
+        reject();
         return;
       }
 
@@ -83,8 +80,15 @@ async function setupTableDefaults() {
 
 async function setupDatabase() {
   /***********    DATABASE SETUP    ************/
-  await setupTableStructures();
-  await setupTableDefaults();
+  return new Promise((resolve, reject) => {
+    try {
+      setupTableStructures();
+      setupTableDefaults();
+      resolve();
+    } catch (e) {
+      reject();
+    }
+  });
 }
 
 module.exports = {

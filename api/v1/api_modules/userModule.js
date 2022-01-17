@@ -1,12 +1,11 @@
 /**************  IMPORTS  **************/
 const { query } = require("../utils/db.js");
-// TODO: Implement methods that need authenticatedRequest.
-//const { authenticateRequest } = require("./authModule.js");
 const bcrypt = require("bcrypt");
 const userModule = require("express").Router();
+const { authenticateRequest } = require("./authModule.js");
 
 /**************  FUNCTIONALITY  **************/
-userModule.get("/user/:user_id", (req, res) => {
+userModule.get("/user/:user_id", authenticateRequest, (req, res) => {
   // If we actually get a user id
   if (Number.isInteger(req.params.user_id)) {
     console.log("Valid");

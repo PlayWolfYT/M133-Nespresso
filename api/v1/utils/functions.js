@@ -64,7 +64,7 @@ function renewJWT(jwt) {
         const data = {
           id: user.user_id,
           username: user.user_name,
-          role: user.role_name,
+          role: user.role_id,
           create_at: user.user_create_date,
           modify_at: user.user_modify_date,
         };

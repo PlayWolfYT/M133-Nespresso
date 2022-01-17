@@ -7,6 +7,8 @@ import Donate from "../views/Donate.vue";
 import Setup from "../views/Setup.vue";
 import DonateMessage from "../views/donate/DonateMessage.vue";
 import DonatePayment from "../views/donate/DonatePayment.vue";
+import ClaimTag from "../views/tags/ClaimTag.vue";
+import TagsOverview from "../views/tags/TagsOverview.vue";
 import { isLoggedIn } from "../utils/Auth.js";
 import axios from "axios";
 
@@ -48,6 +50,16 @@ const routes = [
     props: true,
   },
   {
+    path: "/tags/claim",
+    name: "ClaimTag",
+    component: ClaimTag,
+  },
+  {
+    path: "/tags",
+    name: "Tag Overview",
+    component: TagsOverview,
+  },
+  {
     path: "/logout",
     name: "Logout",
     component: {
@@ -64,7 +76,7 @@ const routes = [
     component: Setup,
     beforeEnter: (_to, _from, next) => {
       axios
-        .get("/nespresso/api/v2/setup")
+        .get("/nespresso/api/v1/setup")
         .then((res) => {
           if (res.data.error) {
             next(false);

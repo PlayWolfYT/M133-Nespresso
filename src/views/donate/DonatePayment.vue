@@ -1,17 +1,19 @@
 <template>
-  <div class="row">
-    DonatePayment
+  <div class="row justify-content-center">
+    <h3>{{ $t("donate.payment.title") }}</h3>
     <br /><br />
-    <div ref="paypal"></div>
-    <button class="btn btn-secondary" @click="onPaymentAccept">
+    <button class="btn btn-danger w-50 mt-4" @click="onPaymentAcceptBypass">
       BYPASS BUTTON FOR TESTING
     </button>
+    <div ref="paypal" class="w-75 mt-4"></div>
   </div>
 </template>
 
 <style scoped></style>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "DonatePayment",
   props: ["selectedUser", "message"],
@@ -43,19 +45,36 @@ export default {
         })
         .render(this.$refs.paypal);
     },
-    onPaymentAccept(data = undefined, actions = undefined) {
-      console.log(data, actions);
-      console.log("Payment accepted");
-      console.log(this.selectedUser.user_name);
-      this.$swal.fire({
+    onPaymentAccept() {
+      this.$toast.fire({
         title: this.$t("donate.popup.confirmation.title"),
         html: this.$t("donate.popup.confirmation.body", {
           name: this.selectedUser.user_name,
         }),
       });
+      this.$router.push({ name: "Home" });
     },
     onPaymentError(err) {
       console.log(err);
+    },
+    onPaymentAcceptBypass() {
+      const { selectedUser, message } = this;
+      this.$toast
+        .fire({
+          icon: "warning",
+          title: "BYPASS",
+          text: "BYPASSING PAYPAL",
+          timer: 1500,
+          didOpen: () => {
+            axios.post("/nespresso/api/v1/paypal/bypass", {
+              selectedUser,
+              message,
+            });
+          },
+        })
+        .then(() => {
+          this.onPaymentAccept();
+        });
     },
   },
   mounted() {

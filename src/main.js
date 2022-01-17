@@ -5,9 +5,18 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import i18n from "./i18n";
 import FlagIcon from "vue-flag-icon";
 import VueSweetalert2 from "vue-sweetalert2";
+import Swal from "sweetalert2";
 import axios from "axios";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 Vue.config.productionTip = false;
+
+/********** FONTAWESOME ***********/
+library.add(faSyncAlt);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 /********** BOOTSTRAP **********/
 
@@ -67,7 +76,7 @@ router.vm = vm;
 let setupError = false;
 
 axios
-  .get("/nespresso/api/v2/setup")
+  .get("/nespresso/api/v1/setup")
   .then((res) => {
     if (res.data.error) {
       setupError = true;
@@ -85,6 +94,17 @@ axios
     alert("API-Communication failed. Please try again later.");
     return;
   });
+
+Vue.prototype.$toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("click", () => Swal.close());
+  },
+});
 
 const vm = new Vue({
   router,

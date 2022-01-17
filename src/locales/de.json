@@ -5,9 +5,13 @@
     "input-text": "Bitte wählen Sie jemanden aus...",
     "message": {
       "message": "Ihre Nachricht...",
+      "submit": "Weiter zu Bezahlung",
       "user": "Ausgewählter Benutzer"
     },
     "no_users_available": "Keine Benutzer Verfügbar",
+    "payment": {
+      "title": "Fertigstellen..."
+    },
     "popup": {
       "confirmation": {
         "body": "Ihre Spende an \"{name}\" wurde gesendet. Es kann ein paar Minuten dauern bis die Spende eingelöst werden kann.",
@@ -45,6 +49,7 @@
     "title": "ANMELDEN"
   },
   "nav": {
+    "claimtag": "Tag beanspruchen",
     "donate": "Kaffee spenden",
     "login": "Anmelden",
     "logout": "Ausloggen",
@@ -53,13 +58,40 @@
   "setup": {
     "popup": {
       "error": {
-        "body": "Fehler: {error}",
+        "body": "{error}",
         "title": "Fehler beim Setup"
       },
       "success": {
         "body": "Die Webseite wurde erfolgreich eingerichtet. Bitte melden Sie sich nun an.",
         "title": "Erfolg"
       }
+    }
+  },
+  "tags": {
+    "claim": {
+      "claim_button": "Beanspruchen",
+      "date": "Datum",
+      "no_tags": "Keine Tags verfügbar",
+      "popup": {
+        "error": {
+          "body": "{error}",
+          "invalid_user": "Bitte geben Sie eine valide NutzerID an",
+          "tag_already_claimed": "Dieser Tag wurde bereits beansprucht.",
+          "tag_not_found": "Dieser Tag existiert nicht.",
+          "title": "Konnte Tag nicht beanspruchen",
+          "user_not_found": "Es wurde kein Benutzer mit dieser ID gefunden."
+        },
+        "success": {
+          "body": "Sie haben den Tag \"{tag}\" erfolgreich beansprucht.",
+          "title": "Tag beansprucht"
+        }
+      },
+      "reload_tags": "Liste aktualisieren",
+      "title": "Tag beanspruchen"
+    },
+    "overview": {
+      "no_tags": "Keine Tags verfügbar",
+      "title": "Tagverwaltung"
     }
   }
 }

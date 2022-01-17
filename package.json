@@ -9,6 +9,9 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/vue-fontawesome": "^2.0.6",
     "@sweetalert2/theme-dark": "^5.0.8",
     "@sweetalert2/theme-wordpress-admin": "^5.0.8",
     "@vue/cli": "^4.5.15",
